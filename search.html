@@ -1,0 +1,171 @@
+---
+layout: default
+title: 搜索
+permalink: /search/
+---
+
+<section class="search-page">
+  <header class="page-header">
+    <h1 class="page-title">搜索文章</h1>
+    <p class="page-desc">输入关键词搜索文章标题和内容</p>
+  </header>
+
+  <!-- 搜索框 -->
+  <div class="search-box">
+    <input type="text" id="search-input" class="search-input" placeholder="输入关键词..." autocomplete="off">
+    <button id="search-btn" class="search-btn">
+      <svg class="search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      搜索
+    </button>
+    <button id="clear-btn" class="clear-btn" style="display: none;">清除</button>
+  </div>
+
+  <!-- 搜索结果 -->
+  <div id="search-results" class="search-results">
+    <div class="search-empty">输入关键词开始搜索</div>
+  </div>
+
+  <!-- 搜索加载状态 -->
+  <div id="search-loading" class="search-loading" style="display: none;">
+    <div class="loading-spinner"></div>
+    <span>搜索中...</span>
+  </div>
+</section>
+
+<!-- 搜索脚本 -->
+<script>
+// 等待 DOM 加载完成
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('search-input');
+  const searchBtn = document.getElementById('search-btn');
+  const clearBtn = document.getElementById('clear-btn');
+  const searchResults = document.getElementById('search-results');
+  const searchLoading = document.getElementById('search-loading');
+
+  let searchIndex = null;
+
+  // 加载搜索索引
+  async function loadSearchIndex() {
+    if (searchIndex) return searchIndex;
+    try {
+      const response = await fetch('{{ "/search.json" | relative_url }}');
+      searchIndex = await response.json();
+      return searchIndex;
+    } catch (e) {
+      console.error('加载搜索索引失败:', e);
+      return [];
+    }
+  }
+
+  // 搜索函数
+  function performSearch(query) {
+    if (!query.trim()) {
+      searchResults.innerHTML = '<div class="search-empty">输入关键词开始搜索</div>';
+      clearBtn.style.display = 'none';
+      return;
+    }
+
+    searchLoading.style.display = 'flex';
+    searchResults.style.display = 'none';
+
+    loadSearchIndex().then(posts => {
+      const results = posts.filter(post => {
+        const titleMatch = post.title.toLowerCase().includes(query.toLowerCase());
+        const contentMatch = post.content.toLowerCase().includes(query.toLowerCase());
+        const tagMatch = post.tags && post.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase()));
+        const categoryMatch = post.categories && post.categories.some(cat => cat.toLowerCase().includes(query.toLowerCase()));
+        return titleMatch || contentMatch || tagMatch || categoryMatch;
+      });
+
+      searchLoading.style.display = 'none';
+      searchResults.style.display = 'block';
+      clearBtn.style.display = 'inline-block';
+
+      if (results.length === 0) {
+        searchResults.innerHTML = `
+          <div class="search-no-results">
+            <p>未找到包含 "<strong>${query}</strong>" 的文章</p>
+            <p class="search-tip">提示：尝试使用其他关键词，或检查拼写</p>
+          </div>
+        `;
+        return;
+      }
+
+      searchResults.innerHTML = `
+        <div class="search-stats">找到 <strong>${results.length}</strong> 篇相关文章</div>
+        <div class="search-results-list">
+          ${results.map(post => `
+            <article class="search-result-item">
+              <div class="result-meta">
+                <time>${post.date}</time>
+                ${post.categories ? `<span class="result-category">${post.categories[0]}</span>` : ''}
+              </div>
+              <h3 class="result-title">
+                <a href="${post.url}">${highlightText(post.title, query)}</a>
+              </h3>
+              <p class="result-excerpt">${highlightText(getExcerpt(post.content, query), query)}</p>
+              ${post.tags ? `
+                <div class="result-tags">
+                  ${post.tags.slice(0, 5).map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+              ` : ''}
+            </article>
+          `).join('')}
+        </div>
+      `;
+    });
+  }
+
+  // 高亮关键词
+  function highlightText(text, query) {
+    if (!query) return text;
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.replace(regex, '<mark class="highlight">$1</mark>');
+  }
+
+  // 获取摘要
+  function getExcerpt(content, query) {
+    const maxLength = 200;
+    const lowerContent = content.toLowerCase();
+    const queryLower = query.toLowerCase();
+    const index = lowerContent.indexOf(queryLower);
+
+    if (index !== -1) {
+      const start = Math.max(0, index - 50);
+      const end = Math.min(content.length, index + query.length + 150);
+      let excerpt = content.slice(start, end);
+      if (start > 0) excerpt = '...' + excerpt;
+      if (end < content.length) excerpt = excerpt + '...';
+      return excerpt;
+    }
+    return content.slice(0, maxLength) + (content.length > maxLength ? '...' : '');
+  }
+
+  // 绑定事件
+  searchBtn.addEventListener('click', () => performSearch(searchInput.value));
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    searchResults.innerHTML = '<div class="search-empty">输入关键词开始搜索</div>';
+    clearBtn.style.display = 'none';
+  });
+
+  // 回车搜索
+  searchInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') performSearch(searchInput.value);
+  });
+
+  // 实时搜索（延迟 300ms）
+  let debounceTimer;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      if (searchInput.value.trim()) {
+        performSearch(searchInput.value);
+      }
+    }, 300);
+  });
+});
+</script>

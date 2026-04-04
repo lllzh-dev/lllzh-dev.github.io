@@ -1,0 +1,52 @@
+---
+layout: default
+title: 归档
+permalink: /archive/
+---
+
+<section class="archive-page">
+  <header class="page-header">
+    <h1 class="page-title">文章归档</h1>
+    <p class="page-desc">按时间浏览文章</p>
+  </header>
+
+  <div class="archive-timeline">
+    {% assign years = site.posts | map: 'date' | map: 'year' | uniq | sort | reverse %}
+    {% for year in years %}
+    <section class="archive-year">
+      <div class="year-header">
+        <h2 class="year-title">{{ year }}</h2>
+        <span class="year-count">
+          {% assign year_posts = site.posts | where_exp: "post", "post.date.year == year" | size %}
+          {{ year_posts }} 篇
+        </span>
+      </div>
+
+      {% assign months = site.posts | where_exp: "post", "post.date.year == year" | map: 'date' | map: 'month' | uniq | sort %}
+      {% for month in months %}
+      <div class="archive-month">
+        <h3 class="month-title">{{ month }}月</h3>
+        <div class="month-posts">
+          {% assign month_posts = site.posts | where_exp: "post", "post.date.year == year" | where_exp: "post", "post.date.month == month" | sort: 'date' | reverse %}
+          {% for post in month_posts %}
+          <article class="archive-post-item">
+            <time class="archive-date">{{ post.date | date: '%m-%d' }}</time>
+            <a href="{{ post.url | relative_url }}" class="archive-title">{{ post.title }}</a>
+            {% if post.categories %}
+            <span class="archive-category">{{ post.categories | first }}</span>
+            {% endif %}
+          </article>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </section>
+    {% endfor %}
+  </div>
+
+  {% if site.posts.size == 0 %}
+  <div class="empty-state">
+    <p>暂无文章</p>
+  </div>
+  {% endif %}
+</section>

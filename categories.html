@@ -1,0 +1,47 @@
+---
+layout: default
+title: 分类
+permalink: /categories/
+---
+
+<section class="categories-page">
+  <header class="page-header">
+    <h1 class="page-title">文章分类</h1>
+    <p class="page-desc">按主题浏览文章</p>
+  </header>
+
+  <div class="categories-grid">
+    {% assign categories = site.posts | map: 'categories' | flatten | uniq | sort %}
+    {% for category in categories %}
+    <section class="category-section">
+      <div class="category-header">
+        <h2 class="category-name">{{ category }}</h2>
+        <span class="category-count">
+          {% assign count = site.posts | where_exp: "post", "post.categories contains category" | size %}
+          {{ count }} 篇
+        </span>
+      </div>
+      <div class="category-posts">
+        {% assign posts = site.posts | where_exp: "post", "post.categories contains category" %}
+        {% for post in posts %}
+        <article class="category-post-item">
+          <div class="post-item-meta">
+            <time>{{ post.date | date: '%Y-%m-%d' }}</time>
+          </div>
+          <a href="{{ post.url | relative_url }}" class="post-item-title">{{ post.title }}</a>
+          {% if post.subtitle %}
+          <span class="post-item-subtitle">{{ post.subtitle | truncate: 50 }}</span>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+
+  {% if categories.size == 0 %}
+  <div class="empty-state">
+    <p>暂无分类文章</p>
+  </div>
+  {% endif %}
+</section>

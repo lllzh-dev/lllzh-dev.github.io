@@ -1,0 +1,57 @@
+---
+layout: default
+title: 标签
+permalink: /tags/
+---
+
+<section class="tags-page">
+  <header class="page-header">
+    <h1 class="page-title">标签索引</h1>
+    <p class="page-desc">按标签浏览文章</p>
+  </header>
+
+  <!-- 标签云 -->
+  <div class="tags-cloud">
+    {% assign all_tags = site.posts | map: 'tags' | flatten | uniq | sort %}
+    {% for tag in all_tags %}
+    {% assign count = site.posts | where_exp: "post", "post.tags contains tag" | size %}
+    <a href="#tag-{{ tag | slugify }}" class="tag-item" data-count="{{ count }}">
+      <span class="tag-name">{{ tag }}</span>
+      <span class="tag-count">{{ count }}</span>
+    </a>
+    {% endfor %}
+  </div>
+
+  <!-- 标签详情 -->
+  <div class="tags-detail">
+    {% for tag in all_tags %}
+    <section class="tag-section" id="tag-{{ tag | slugify }}">
+      <h2 class="tag-section-title">
+        <span class="tag-icon">#</span>{{ tag }}
+        <span class="tag-section-count">
+          {% assign count = site.posts | where_exp: "post", "post.tags contains tag" | size %}
+          {{ count }} 篇
+        </span>
+      </h2>
+      <div class="tag-posts">
+        {% assign posts = site.posts | where_exp: "post", "post.tags contains tag" | sort: 'date' | reverse %}
+        {% for post in posts %}
+        <article class="tag-post-item">
+          <time class="tag-post-date">{{ post.date | date: '%Y-%m-%d' }}</time>
+          <a href="{{ post.url | relative_url }}" class="tag-post-title">{{ post.title }}</a>
+          {% if post.categories %}
+          <span class="tag-post-category">{{ post.categories | first }}</span>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+
+  {% if all_tags.size == 0 %}
+  <div class="empty-state">
+    <p>暂无标签</p>
+  </div>
+  {% endif %}
+</section>
