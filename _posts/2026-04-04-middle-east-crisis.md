@@ -3,7 +3,7 @@ layout: post
 title: 中东战火升级与全球市场震荡
 subtitle: 美伊冲突第92波打击、油价暴涨11%、千问登顶、SpaceX史上最大IPO
 date: 2026-04-04
-author: 紫浩
+author: LZH
 categories: [财经日评]
 tags: [中东, 原油, A股, AI, SpaceX, 地缘政治]
 ---
