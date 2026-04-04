@@ -1,0 +1,37 @@
+title: 紫浩投资笔记
+email: lllzh-dev@users.noreply.github.com
+description: >-
+  投资 · 科技 · 思考 — 关注全球市场的独立研究博客
+baseurl: ""
+url: "https://lllzh-dev.github.io"
+github_username: lllzh-dev
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+
+permalink: /:year/:month/:day/:title/
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "紫浩"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
