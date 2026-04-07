@@ -1,0 +1,99 @@
+---
+layout: default
+title: 投资看板
+permalink: /dashboard/
+---
+
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>投资看板</h1>
+    <p class="dashboard-desc">实时持仓追踪 · 研报论文库 · 新闻快讯 · 量化研究</p>
+  </div>
+  
+  <div class="iframe-wrapper">
+    <iframe src="http://115.190.126.230" 
+            width="100%" 
+            height="800" 
+            frameborder="0" 
+            allowfullscreen
+            loading="lazy"
+            class="dashboard-iframe">
+      <p>您的浏览器不支持iframe，请<a href="http://115.190.126.230" target="_blank">点击访问投资看板</a></p>
+    </iframe>
+  </div>
+  
+  <div class="dashboard-footer">
+    <a href="http://115.190.126.230" target="_blank" class="btn-fullscreen">全屏访问 →</a>
+  </div>
+</div>
+
+<style>
+.dashboard-container {
+  max-width: 100%;
+  padding: 0;
+}
+
+.dashboard-header {
+  text-align: center;
+  padding: 20px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin-bottom: 0;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.dashboard-desc {
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.iframe-wrapper {
+  position: relative;
+  width: 100%;
+  height: 800px;
+  overflow: hidden;
+}
+
+.dashboard-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.dashboard-footer {
+  text-align: center;
+  padding: 20px;
+  background: #f8f9fa;
+}
+
+.btn-fullscreen {
+  display: inline-block;
+  padding: 12px 24px;
+  background: #667eea;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.btn-fullscreen:hover {
+  background: #5a6fd6;
+}
+
+@media (max-width: 768px) {
+  .iframe-wrapper {
+    height: 600px;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+}
+</style>
