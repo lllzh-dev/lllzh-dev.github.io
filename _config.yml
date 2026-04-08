@@ -1,4 +1,4 @@
-title: LZH的空间
+title: 深潜Fathom
 email: lllzh-dev@users.noreply.github.com
 description: >-
   投资 · 科技 · 思考 — 关注全球市场的独立研究博客
@@ -21,7 +21,7 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      author: "LZH"
+      author: "深潜Fathom"
   - scope:
       path: ""
     values:
