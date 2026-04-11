@@ -33,6 +33,8 @@ tags: [美伊谈判, 霍尔木兹海峡, 中东, 能源]
 4. **立即停止所有袭击** — 尤其是针对黎巴嫩的袭击
 5. **允许伊朗使用民用核能** — 核能权利诉求
 
+**原文链接**：[伊朗提出伊美谈判前提条件（新华社）](https://baijiahao.baidu.com/s?id=1862172380655615775)
+
 ### 双方立场差距
 
 | 争议点 | 伊朗立场 | 美方立场 |
@@ -105,3 +107,14 @@ tags: [美伊谈判, 霍尔木兹海峡, 中东, 能源]
 - **黎以停火会谈**：14日举行
 - **资产解冻问题**：双方表态不一致
 - **土耳其油气勘探**：索马里项目进展
+
+---
+
+## 参考链接
+
+- [伊朗提出伊美谈判前提条件（新华社）](https://baijiahao.baidu.com/s?id=1862172380655615775)
+- [伊朗政府发言人表态（央视新闻）](https://content-static.cctvnews.cctv.com/snow-book/index.html?item_id=7393626008506828839&channelId=1017&toc_style_id=feeds_default)
+- [白宫否认同意解冻伊朗资产（CCTV国际时讯）](https://m.weibo.cn/detail/5286580327810969)
+- [伊朗代表团会见巴基斯坦陆军参谋长（央视新闻）](https://ysxw.cctv.cn/article.html?toc_style_id=feeds_default&item_id=10898217801310276358&channelId=1119)
+- [印尼外长支持中巴五点倡议（新华社）](https://www.news.cn/20260411/da9a5e3d234849c99ea66789535d3493/c.html)
+- [美军PrSM导弹袭击伊朗平民目标（央视新闻）](https://content-static.cctvnews.cctv.com/snow-book/index.html?item_id=975857644505343542&channelId=1119&toc_style_id=feeds_default)
